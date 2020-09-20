@@ -1,0 +1,136 @@
+<html>
+    <head>
+        <link rel="icon" type="image/x-icon" href="favicon.ico" />
+        <link rel="stylesheet" href="bootstrap.css">
+        <link rel="stylesheet" href="doge.css"> 
+
+        <title>Bakkt Bitcoin Market Share</title>
+        
+        <script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+
+        <script>
+
+
+
+    </script>
+
+    </head>
+    <body>
+    
+    
+            <h1 class="victory"><code>BAKKT BITCOIN FUTURES VOLUME</code></h1>
+        
+        <div class="container pt-5" >
+            <div class="chart-container">
+                <canvas id="myChart"></canvas>
+            </div> 
+            <div class="row"></div>
+        </div>
+
+        <!--Waves Container-->
+            <div class="waves">
+                    <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                            <defs>
+                                <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+                            </defs>
+                            <g class="parallax">
+                                <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(255,255,255,0.7" />
+                                <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(255,255,255,0.4)" />
+                                <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(255,255,255,0.2)" />
+                                <use xlink:href="#gentle-wave" x="48" y="7" fill="#fff" />
+                            </g>
+                    </svg>
+            </div> 
+
+        <!--Waves end--> 
+    
+
+
+            <script src="doge.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+            <script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script>
+            <script>
+
+                const myHeaders = new Headers({'content-type': 'application/json'});
+
+                const myInit = {
+                method: 'GET',
+                headers: myHeaders,
+                mode: 'cors'
+                };
+
+                let marketShare = {};
+                //https://7r1hliivm3.execute-api.us-east-2.amazonaws.com/default/marketshare
+                fetch('https://aao6ssm1kh.execute-api.us-east-1.amazonaws.com/default/testFunction', myInit)
+                .then(res=>
+                res.json()
+                ).then(data=> {
+                marketShare = data;
+                console.log(data);
+                    // $( document ).ready(function(){
+                    //     $(".row").append('<div class="col-6 alert-primary border border-secondary">Bakkt IFUS Futures Total: </div>' + '<div class="col-sm alert-info border border-success">' + marketShare.bt + '</div>');
+                    //     $(".row").append('<div class="col-6 alert-primary border border-secondary">Bakkt IFSG Cash Futures Total: </div>' +'<div class="col-sm alert-info border border-success">' + marketShare.bakktCashTotal + '</div>');
+                    //     $(".row").append('<div class="col-6 alert-primary border border-secondary">Combined Bakkt Futures Total: </div>' +'<div class="col-sm alert-info border border-success">' + marketShare.bakktCombinedTotal + '</div>');
+                    //     $(".row").append('<div class="col-6 alert-primary border border-secondary">CME Futures Total(ICE Equivalent): </div>' +'<div class="col-sm alert-info border border-success">' + marketShare.ct + '</div>');
+                    //     $(".row").append('<div class="col-6 alert-primary border border-secondary">Bakkt IFUS Market Share vs CME: </div>' +'<div class="col-sm alert-info border border-success">' + parseFloat(marketShare.mspRounded) + '%</div>');
+                    //     $(".row").append('<div class="col-6 alert-primary border border-secondary">Bakkt IFSG Market Share vs CME: </div>' +'<div class="col-sm alert-info border border-success">' + parseFloat(marketShare.cashMSPRounded) + '%</div>');
+                    //     $(".row").append('<div class="col-6 alert-primary border border-secondary">Combined Bakkt Market Share vs CME: </div>' +'<div class="col-sm alert-info border border-success">' + parseFloat(marketShare.combinedMSPRounded) + '%</div>');
+                    // })
+                    var ctx = document.getElementById('myChart').getContext('2d');
+                var chart = new Chart(ctx, {
+                    // The type of chart we want to create
+                    type: 'doughnut',
+                
+                    // The data for our dataset
+                    data: {
+                        labels: ['CME', 'IFUS Bakkt Monthly', 'IFSG Bakkt Monthly'],
+                        datasets: [{
+                            label: 'My First dataset',
+                            backgroundColor: [
+                            "rgba(172, 237, 250,1)",
+                            "rgba(95, 245, 170,1)",
+                            "rgba(205, 132, 250,1)"
+					],
+                            data: [marketShare.ct, marketShare.bt, marketShare.bct]
+                        }]
+                    },
+                
+                    // Configuration options go here
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutoutPercentage: 60,
+                        legend:{
+                            position: 'bottom'
+                        },
+                        plugins: {
+                            labels: [
+                                {                                    
+                                    render: 'label',
+                                    fontColor: '#FFF',
+                                    position: 'outside' 
+                                },
+                                {
+                                    render: 'percentage',
+                                    fontColor: ['green', 'white', 'red'],
+                                    precision: 2
+                                }
+                            ]
+                        }
+                    }
+                });
+                });
+                
+                console.log(marketShare)
+
+            </script>
+      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> -->
+        
+        
+    </body>
+</html>
