@@ -1,29 +1,22 @@
 <html>
     <head>
         <link rel="icon" type="image/x-icon" href="favicon.ico" />
-        <link rel="stylesheet" href="bootstrap.css">
+        <!-- <link rel="stylesheet" href="bootstrap.css"> -->
         <link rel="stylesheet" href="doge.css"> 
-
         <title>Bakkt Bitcoin Market Share</title>
-        
-        <script
+        <!-- <script
         src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
         crossorigin="anonymous"></script>
-
-        <script>
-
-
-
-    </script>
+        <script> -->
 
     </head>
     <body>
     
     
-            <h1 class="victory"><code>BAKKT BITCOIN FUTURES VOLUME</code></h1>
+        <h1 class="victory"><code>BAKKT BITCOIN FUTURES VOLUME</code></h1>
         
-        <div class="container pt-5" >
+        <div class="container" >
             <div class="chart-container">
                 <canvas id="myChart"></canvas>
             </div> 
@@ -47,8 +40,6 @@
 
         <!--Waves end--> 
     
-
-
             <script src="doge.js"></script>
             <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
             <script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script>
@@ -70,6 +61,7 @@
                 ).then(data=> {
                 marketShare = data;
                 console.log(data);
+                    
                     // $( document ).ready(function(){
                     //     $(".row").append('<div class="col-6 alert-primary border border-secondary">Bakkt IFUS Futures Total: </div>' + '<div class="col-sm alert-info border border-success">' + marketShare.bt + '</div>');
                     //     $(".row").append('<div class="col-6 alert-primary border border-secondary">Bakkt IFSG Cash Futures Total: </div>' +'<div class="col-sm alert-info border border-success">' + marketShare.bakktCashTotal + '</div>');
@@ -79,58 +71,70 @@
                     //     $(".row").append('<div class="col-6 alert-primary border border-secondary">Bakkt IFSG Market Share vs CME: </div>' +'<div class="col-sm alert-info border border-success">' + parseFloat(marketShare.cashMSPRounded) + '%</div>');
                     //     $(".row").append('<div class="col-6 alert-primary border border-secondary">Combined Bakkt Market Share vs CME: </div>' +'<div class="col-sm alert-info border border-success">' + parseFloat(marketShare.combinedMSPRounded) + '%</div>');
                     // })
-                    var ctx = document.getElementById('myChart').getContext('2d');
-                var chart = new Chart(ctx, {
-                    // The type of chart we want to create
-                    type: 'doughnut',
-                
-                    // The data for our dataset
-                    data: {
-                        labels: ['CME', 'IFUS Bakkt Monthly', 'IFSG Bakkt Monthly'],
-                        datasets: [{
-                            label: 'My First dataset',
-                            backgroundColor: [
-                            "rgba(172, 237, 250,1)",
-                            "rgba(95, 245, 170,1)",
-                            "rgba(205, 132, 250,1)"
-					],
-                            data: [marketShare.ct, marketShare.bt, marketShare.bct]
-                        }]
-                    },
-                
-                    // Configuration options go here
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        cutoutPercentage: 60,
-                        legend:{
-                            position: 'bottom'
-                        },
-                        plugins: {
-                            labels: [
-                                {                                    
-                                    render: 'label',
-                                    fontColor: '#FFF',
-                                    position: 'outside' 
-                                },
-                                {
-                                    render: 'percentage',
-                                    fontColor: ['green', 'white', 'red'],
-                                    precision: 2
-                                }
-                            ]
-                        }
-                    }
-                });
-                });
-                
-                console.log(marketShare)
 
-            </script>
-      
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> -->
-        
-        
+                var ctx = document.getElementById('myChart').getContext('2d');
+                var chart = new Chart(ctx, {
+                // The type of chart we want to create
+                type: 'doughnut',
+                // The data for our dataset
+                data: {
+
+                    labels: ['CME Futures (ICE Equivalent)', 'IFUS Bakkt Futures' , 'IFSG Bakkt Futures'],
+                    
+                    datasets: [{
+                        label: 'Futures Volume',
+                        backgroundColor: [
+                        "rgba(172, 237, 250,1)",
+                        "rgba(95, 245, 170,1)",
+                        "rgba(205, 132, 250,1)"
+                        ],
+                        borderColor: 'black',
+                        data: [marketShare.ct, marketShare.bt, marketShare.bct]
+                    }]
+                },
+            
+                // Configuration options go here
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutoutPercentage: 60,
+                    legend:{
+                        position: 'bottom',
+                        labels:{
+                        fontColor: 'white'
+                        },
+                    },
+                    plugins: {
+                        labels: [
+                            {                                    
+                                render: 'label',
+                                fontColor: 'white',
+                                position: 'outside',
+                                textShadow: true,
+                                shadowColor: 'rgba(255,0,0,1)',
+                                outsidePadding: 4
+                            },
+                            {
+                                render: 'percentage',
+                                fontColor: ['green', 'white', 'red'],
+                                precision: 2
+                            },
+                            {
+                                render: function (args) {
+                                    return 'Lots:' + args.value;
+                                },
+                                fontColor: ['green', 'white', 'red'],
+                                position: 'border',
+                                overlap: false
+                            }
+                        ]
+                    }
+                }
+            });
+            });               
+
+        </script>  
+        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script> -->
+        <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> -->      
     </body>
 </html>

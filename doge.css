@@ -3,6 +3,7 @@
 body { 
   height: 100%;
   width: 100%;
+  margin: 0;
   left:0;
   right: 0;
   top: 0;
@@ -40,6 +41,7 @@ background-size: 1800% 1800%;
 .chart-container{
   position: relative;
   height: 60vh;
+  padding-bottom: 5%;
 }
 
 .victory {
@@ -93,6 +95,7 @@ background-size: 1800% 1800%;
     height: 15vh;
     margin-top: 10px;
     bottom: 0; 
+    padding-top: 10%;
     /*Fix for safari gap*/
     min-height: 100px;
     max-height: 150px;
