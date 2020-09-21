@@ -1,7 +1,7 @@
 <html>
     <head>
         <link rel="icon" type="image/x-icon" href="favicon.ico" />
-        <link rel="stylesheet" href="bootstrap.css"> 
+        <link rel="stylesheet" href="bootstrap.css">
         <link rel="stylesheet" href="doge.css"> 
         <title>Bakkt Bitcoin Market Share</title>
         <!-- <script
@@ -88,7 +88,7 @@
                         "rgba(95, 245, 170,1)",
                         "rgba(205, 132, 250,1)"
                         ],
-                        borderColor: 'black',
+                        borderColor: 'gray',
                         data: [marketShare.ct, marketShare.bt, marketShare.bct]
                     }]
                 },
@@ -110,22 +110,18 @@
                                 render: 'label',
                                 fontColor: 'white',
                                 position: 'outside',
-                                textShadow: true,
+                                textMargin: 6,
+                                textShadow: true,   
                                 shadowColor: 'rgba(255,0,0,1)',
-                                outsidePadding: 4
-                            },
-                            {
-                                render: 'percentage',
-                                fontColor: ['green', 'white', 'red'],
-                                precision: 2
                             },
                             {
                                 render: function (args) {
-                                    return 'Lots:' + args.value;
+                                    return 'Lots:' + args.value + '\n' + '\n'+ args.percentage + '%';
                                 },
-                                fontColor: ['green', 'white', 'red'],
+                                fontColor: ['green', 'blue', 'red'],
                                 position: 'border',
-                                overlap: false
+                                precision: 2
+                                
                             }
                         ]
                     }
