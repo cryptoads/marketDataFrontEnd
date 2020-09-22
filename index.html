@@ -4,11 +4,11 @@
         <link rel="stylesheet" href="bootstrap.css">
         <link rel="stylesheet" href="doge.css"> 
         <title>Bakkt Bitcoin Market Share</title>
-        <!-- <script
+        <script
         src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
         crossorigin="anonymous"></script>
-        <script> -->
+        
 
     </head>
     <body>
@@ -19,8 +19,12 @@
         <div class="container" >
             <div class="chart-container">
                 <canvas id="myChart"></canvas>
+                <div class="row classicView"></div>
             </div> 
-            <div class="row"></div>
+            
+        </div>
+        <div id="target" class="classicButton">
+            Classic View
         </div>
 
         <!--Waves Container-->
@@ -61,16 +65,34 @@
                 ).then(data=> {
                 marketShare = data;
                 console.log(data);
-                    
-                    // $( document ).ready(function(){
-                    //     $(".row").append('<div class="col-6 alert-primary border border-secondary">Bakkt IFUS Futures Total: </div>' + '<div class="col-sm alert-info border border-success">' + marketShare.bt + '</div>');
-                    //     $(".row").append('<div class="col-6 alert-primary border border-secondary">Bakkt IFSG Cash Futures Total: </div>' +'<div class="col-sm alert-info border border-success">' + marketShare.bakktCashTotal + '</div>');
-                    //     $(".row").append('<div class="col-6 alert-primary border border-secondary">Combined Bakkt Futures Total: </div>' +'<div class="col-sm alert-info border border-success">' + marketShare.bakktCombinedTotal + '</div>');
-                    //     $(".row").append('<div class="col-6 alert-primary border border-secondary">CME Futures Total(ICE Equivalent): </div>' +'<div class="col-sm alert-info border border-success">' + marketShare.ct + '</div>');
-                    //     $(".row").append('<div class="col-6 alert-primary border border-secondary">Bakkt IFUS Market Share vs CME: </div>' +'<div class="col-sm alert-info border border-success">' + parseFloat(marketShare.mspRounded) + '%</div>');
-                    //     $(".row").append('<div class="col-6 alert-primary border border-secondary">Bakkt IFSG Market Share vs CME: </div>' +'<div class="col-sm alert-info border border-success">' + parseFloat(marketShare.cashMSPRounded) + '%</div>');
-                    //     $(".row").append('<div class="col-6 alert-primary border border-secondary">Combined Bakkt Market Share vs CME: </div>' +'<div class="col-sm alert-info border border-success">' + parseFloat(marketShare.combinedMSPRounded) + '%</div>');
-                    // })
+                var newView = true; 
+                $( "#target" ).click(function() {
+                    newView = !newView;
+                    getView();
+                    });
+                
+                var getView = function(){
+                if(!newView){
+                    $(".classicButton").text("New View")
+                    $( "#myChart" ).remove();
+                    $(".chartjs-size-monitor").remove();
+                    $(".row").addClass('classicView')
+                    $( document ).ready(function(){
+                     
+                        $(".row").append('<div class="col-6 alert-primary border border-secondary">Bakkt IFUS Futures Total: </div>' + '<div class="col-sm alert-info border border-success">' + marketShare.bt + '</div>');
+                        $(".row").append('<div class="col-6 alert-primary border border-secondary">Bakkt IFSG Cash Futures Total: </div>' +'<div class="col-sm alert-info border border-success">' + marketShare.bct + '</div>');
+                        $(".row").append('<div class="col-6 alert-primary border border-secondary">Combined Bakkt Futures Total: </div>' +'<div class="col-sm alert-info border border-success">' + (marketShare.bt + marketShare.bct) + '</div>');
+                        $(".row").append('<div class="col-6 alert-primary border border-secondary">CME Futures Total(ICE Equivalent): </div>' +'<div class="col-sm alert-info border border-success">' + marketShare.ct + '</div>');
+                        $(".row").append('<div class="col-6 alert-primary border border-secondary">Bakkt IFUS Market Share vs CME: </div>' +'<div class="col-sm alert-info border border-success">' + parseFloat(marketShare.mspRounded) + '%</div>');
+                        $(".row").append('<div class="col-6 alert-primary border border-secondary">Bakkt IFSG Market Share vs CME: </div>' +'<div class="col-sm alert-info border border-success">' + parseFloat(marketShare.bct/(marketShare.ct + marketShare.bct)*100).toFixed(2) + '%</div>');
+                        $(".row").append('<div class="col-6 alert-primary border border-secondary">Combined Bakkt Market Share vs CME: </div>' +'<div class="col-sm alert-info border border-success">' + parseFloat((marketShare.bct+marketShare.bt)/(marketShare.ct+marketShare.bt+marketShare.bct)* 100).toFixed(2) + '%</div>');
+                        $(".chart-container").append('<canvas id="myChart"> </canvas>');
+                        
+                    })
+                }else{
+                $(".classicButton").text("Classic View")
+                $(".row").removeClass('classicView')
+                $(".row").empty();
 
                 var ctx = document.getElementById('myChart').getContext('2d');
                 var chart = new Chart(ctx, {
@@ -127,10 +149,13 @@
                     }
                 }
             });
+            }
+            }
+            getView();
             });               
 
         </script>  
-        <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script> -->
-        <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script> -->      
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>      
     </body>
 </html>
